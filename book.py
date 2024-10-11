@@ -1,3 +1,4 @@
+import user
 class Book():
     def __init__(self):
         self.library = {}
@@ -10,25 +11,64 @@ class Book():
         self.library[title]["pub_date"] = pub_date
         self.library[title]["available"] = available
 
+
     def update_availability(self, available):
         self.available = available
 
-    def borrow_book(self, title):
-        if self.library[title]:
-            if self.library[title]["available"] == "available":
-                self.library[title]["available"] = "unavailable"
-                print(f"{title} borrowed.")
+    def borrow_book(self, users, user_id, title):
+        try:
+            if title in self.library:
+                if self.library[title]["available"] == "available":
+                    self.library[title]["available"] = "borrowed"
+                    users._User__user_list[user_id]["borrowed books"].append(title)
+                    print(f"{title} borrowed.")
+                else:
+                    print(f"{title} has been borrowed. Sorry.")
             else:
-                print(f"{title} is unavailable. Sorry.")
+                print(f"{title} not found.")
+        except TypeError:
+            print("Invalid input. Please enter a six-digit number corresponding to a user.")
+        except ValueError:
+            print("Invalid input. Please enter a six-digit number corresponding to a user.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+    
+    def return_book(self, title):
+        if title in self.library:
+            if self.library[title]["available"] == "borrowed":
+                self.library[title]["available"] = "available"
+                print("Book returned.")
+            else:
+                print("Looks like that was already returned.")
         else:
-            print(f"{title} not found.")
+            print("Title not found. Are you sure you borrowed it from this library?")
+
+    def search_books(self):
+        if self.library:
+            search_term = input("Enter your search term: ").title()
+            match_found = False
+            for book in self.library.values():
+                if search_term in book.values():
+                    match_found = True
+                    print(f"Match found: {book["title"]}")
+            if not match_found:
+                print("No matches found. Sorry.")
+        else:
+            print("No books in the library right now.")
 
     def display_book(self):
-        print(f"Title: {self.title}, Author: {self.author}, Genre: {self.genre}, Published on {self.pub_date}, is {self.available}")
+        if self.library:
+            for value in self.library.values():
+                print(f"Title: {value['title']}, Author: {value['author']}, Genre: {value['genre']}, Published on {value['pub_date']}, \
+is {value['available']}")
+        else:
+            print("No books here!")
+            return
+        
 
 def new_book(books):
     title = input("What is the title of the book? ").title()
-    if title in books:
+    if title in books.library:
         print("That book is already in the library.")
         return
     author = input("Who is the author of the book? ").title()
@@ -38,14 +78,3 @@ def new_book(books):
     pub_date = input("When was the book published? ").title()
     available = "available"
     books.add_book(title, author, genre, pub_date, available)
-
-# def borrow():
-#     title = input("What book would you like to borrow? ").title()
-#     if title in books:
-#         if Book.check_availability(title) == "available":
-#             Book.update_availability("unavailable")
-#             print(f"{books[title]} checked out.")
-#         else:
-#             print(f"{books[title]} is not available right now. Sorry.")
-#     else:
-#         print("Doesn't look like the library has that book.")

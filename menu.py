@@ -7,7 +7,24 @@ books = book.Book()
 
 bible = books.add_book("Bible", "God", "Religion", "0", "available")
 harry_potter = books.add_book("Harry Potter", "J. K. Rowling", "Fantasy", "1997", "available")
-print(books)
+fsm_gospel = books.add_book("The Gospel of the Flying Spaghetti Monster", "Bobby Henderson", "Religion", "2006", "available")
+seven_habits = books.add_book("The 7 Habits of Highly Effective People", "Stephen R. Covey", "Self-help", "1989", "available")
+
+authors = author.Author()
+
+jkrowling = authors.add_author("J. K. Rowling", "Author of Harry Potter, one of the most successful book series of all time. \
+She was the first ever billionaire to lose her billionaire status by donating to charity.")
+god = authors.add_author("God", "An entity said to have created the universe and all within, with public opinion divided on the \
+legitimacy of His existence.")
+stephenrcovey = authors.add_author("Stephen R. Covey", "Creator of The 7 Habits of Highly Effective People, an extremely \
+successful self-help book.")
+bobbyhenderson = authors.add_author("Bobby Henderson", "Inventor of Pastafarianism, critic of intelligent design theory.")
+
+__users = user.User()
+
+allanahmed = __users.add_user(314159, "Allan Ahmed", [])
+jaredwilson = __users.add_user(113113, "Jared Wilson", [])
+
 
 def main_menu():
     print("Welcome to the Library Management System!")
@@ -32,14 +49,16 @@ def book_menu():
     if which_operation == "1":
         book.new_book(books)
     elif which_operation == "2":
-        pass
-#        book.borrow_book()
+        user_id = int(input("Enter user ID: "))
+        title = input("What book would you like to borrow? ").title()
+        books.borrow_book(__users, user_id, title)
     elif which_operation == "3":
-        pass
+        title = input("Which book would you like to return? ")
+        books.return_book(title)
     elif which_operation == "4":
-        pass
+        books.search_books()
     elif which_operation == "5":
-        pass
+        books.display_book()
     else:
         print("Invalid input. Please enter a number from 1 to 5.")
 
@@ -47,21 +66,21 @@ def user_menu():
     print("\nUser Operations:\n1. Add a new user\n2. View user details\n3. Display all users")
     which_operation = input()
     if which_operation == "1":
-        pass
+        user.add_users(__users)
     elif which_operation == "2":
-        pass
+        __users.search_user()
     elif which_operation == "3":
-        pass
+        __users.display_users()
     else:
         print("Invalid input. Please enter a number from 1 to 3.")
 def author_menu():
     print("\nAuthor Operations:\n1. Add a new author\n2. View author details\n3. Display all authors")
     which_operation = input()
     if which_operation == "1":
-        pass
+        author.add_authors(authors)
     elif which_operation == "2":
-        pass
+        authors.search_author()
     elif which_operation == "3":
-        pass
+        authors.display_authors()
     else:
         print("Invalid input. Please enter a number from 1 to 3.")
