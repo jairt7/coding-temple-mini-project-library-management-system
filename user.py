@@ -35,13 +35,13 @@ class User():
             return
 
 
-def add_users(__users):
+def add_users(users):
     name = input("What is the new user's username? ")
     id_in_database = False
     while not id_in_database:
         id = random.randrange(111111,999999)
-        if id not in __users._User__user_list:
+        if id not in users._User__user_list:
             id_in_database = True
     
     borrowed = []
-    __users.add_user(id, name, borrowed)
+    users.add_user(id, name, borrowed)

@@ -20,10 +20,10 @@ stephenrcovey = authors.add_author("Stephen R. Covey", "Creator of The 7 Habits 
 successful self-help book.")
 bobbyhenderson = authors.add_author("Bobby Henderson", "Inventor of Pastafarianism, critic of intelligent design theory.")
 
-__users = user.User()
+users = user.User()
 
-allanahmed = __users.add_user(314159, "Allan Ahmed", [])
-jaredwilson = __users.add_user(113113, "Jared Wilson", [])
+allanahmed = users.add_user(314159, "Allan Ahmed", [])
+jaredwilson = users.add_user(113113, "Jared Wilson", [])
 
 
 def main_menu():
@@ -49,9 +49,14 @@ def book_menu():
     if which_operation == "1":
         book.new_book(books)
     elif which_operation == "2":
-        user_id = int(input("Enter user ID: "))
-        title = input("What book would you like to borrow? ").title()
-        books.borrow_book(__users, user_id, title)
+        try:
+            user_id = int(input("Enter user ID: "))
+            if user_id not in users._User__user_list:
+                raise Exception("Invalid user ID. Try again.")
+            title = input("What book would you like to borrow? ").title()
+            books.borrow_book(users, user_id, title)
+        except Exception as e:
+            print(f"An error occurred: {e}")
     elif which_operation == "3":
         title = input("Which book would you like to return? ")
         books.return_book(title)
@@ -66,11 +71,11 @@ def user_menu():
     print("\nUser Operations:\n1. Add a new user\n2. View user details\n3. Display all users")
     which_operation = input()
     if which_operation == "1":
-        user.add_users(__users)
+        user.add_users(users)
     elif which_operation == "2":
-        __users.search_user()
+        users.search_user()
     elif which_operation == "3":
-        __users.display_users()
+        users.display_users()
     else:
         print("Invalid input. Please enter a number from 1 to 3.")
 def author_menu():

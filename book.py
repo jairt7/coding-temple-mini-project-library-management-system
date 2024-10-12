@@ -75,6 +75,10 @@ def new_book(books):
     genre = input("What is the genre of the book? ").title()
     if genre == "":
         genre = "General"
-    pub_date = input("When was the book published? ").title()
+    try:
+        pub_date = int(input("What year was the book published? "))
+    except ValueError:
+        print("Doesn't look like you entered a year. Please try again.")
+        return
     available = "available"
     books.add_book(title, author, genre, pub_date, available)
