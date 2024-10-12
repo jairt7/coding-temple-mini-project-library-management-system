@@ -32,3 +32,6 @@ Public domain
 ## Acknowledgments
 
 Thanks, Allan and Daniel.
+
+### Note
+I used a README template but I'm guessing this is still inadequate because I suck at writing. Dropped out of college because I couldn't write. Sorry if this README isn't on par.
